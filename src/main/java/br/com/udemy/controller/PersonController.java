@@ -18,7 +18,7 @@ import br.com.udemy.service.PersonService;
 public class PersonController {
 	
 	@Autowired
-	private PersonService personService;
+	PersonService personService;
 	
 	@RequestMapping(method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
 	public List<Person> findAll() {
@@ -26,7 +26,7 @@ public class PersonController {
 	}
 	
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-	public Person findById(@PathVariable("id") String id) throws Exception {
+	public Person findById(@PathVariable("id") Long id) throws Exception {
 		return personService.findById(id);
 	}
 	
@@ -41,7 +41,7 @@ public class PersonController {
 	}
 	
 	@RequestMapping(value = "/{id}", method = RequestMethod.DELETE, produces = MediaType.APPLICATION_JSON_VALUE)
-	public void delete(@PathVariable("id") String id) {
+	public void delete(@PathVariable("id") Long id) {
 		personService.delete(id);
 	}
 	
