@@ -14,37 +14,37 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import br.com.udemy.domain.Person;
-import br.com.udemy.service.PersonService;
+import br.com.udemy.service.PersonVOService;
+import br.com.udemy.vo.PersonVO;
 
 @RestController
 @RequestMapping("/person")
-public class PersonController {
+public class PersonVOController {
 
 	@Autowired
-	private PersonService personService;
+	private PersonVOService personService;
 
 	@GetMapping
 	@ResponseStatus(HttpStatus.OK)
-	public List<Person> findAll() {
+	public List<PersonVO> findAll() {o
 		return personService.findAll();
 	}
 
 	@GetMapping("/{id}")
 	@ResponseStatus(HttpStatus.OK)
-	public Person findById(@PathVariable("id") Long id) {
+	public PersonVO findById(@PathVariable("id") Long id) {
 		return personService.findById(id);
 	}
 
 	@PostMapping
 	@ResponseStatus(HttpStatus.CREATED)
-	public Person create(@RequestBody Person person) {
+	public PersonVO create(@RequestBody PersonVO person) {
 		return personService.create(person);
 	}
 
 	@PutMapping
 	@ResponseStatus(HttpStatus.NO_CONTENT)
-	public Person update(@RequestBody Person person) {
+	public PersonVO update(@RequestBody PersonVO person) {
 		return personService.update(person);
 	}
 

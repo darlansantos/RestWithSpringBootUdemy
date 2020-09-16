@@ -16,7 +16,8 @@ public class PersonService {
 	PersonRepository personRepository;
 
 	public Person findById(Long id) {
-		return personRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("No records found for this ID"));
+		return personRepository.findById(id)
+				.orElseThrow(() -> new ResourceNotFoundException("No records found for this ID"));
 	}
 
 	public List<Person> findAll() {
