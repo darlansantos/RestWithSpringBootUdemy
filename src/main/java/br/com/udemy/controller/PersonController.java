@@ -14,19 +14,19 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import br.com.udemy.service.PersonVOService;
+import br.com.udemy.service.PersonService;
 import br.com.udemy.vo.PersonVO;
 
 @RestController
 @RequestMapping("/person")
-public class PersonVOController {
+public class PersonController {
 
 	@Autowired
-	private PersonVOService personService;
+	private PersonService personService;
 
 	@GetMapping
 	@ResponseStatus(HttpStatus.OK)
-	public List<PersonVO> findAll() {o
+	public List<PersonVO> findAll() {
 		return personService.findAll();
 	}
 
