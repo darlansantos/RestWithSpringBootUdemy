@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.com.udemy.service.PersonService;
+import br.com.udemy.v2.PersonVOV2;
 import br.com.udemy.vo.PersonVO;
 
 @RestController
@@ -40,6 +41,12 @@ public class PersonController {
 	@ResponseStatus(HttpStatus.CREATED)
 	public PersonVO create(@RequestBody PersonVO person) {
 		return personService.create(person);
+	}
+	
+	@PostMapping("v2")
+	@ResponseStatus(HttpStatus.CREATED)
+	public PersonVOV2 createV2(@RequestBody PersonVOV2 person) {
+		return personService.createV2(person);
 	}
 
 	@PutMapping

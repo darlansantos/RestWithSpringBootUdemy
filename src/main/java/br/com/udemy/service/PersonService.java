@@ -9,6 +9,7 @@ import br.com.udemy.converter.DozerConverter;
 import br.com.udemy.domain.Person;
 import br.com.udemy.exception.ResourceNotFoundException;
 import br.com.udemy.repository.PersonRepository;
+import br.com.udemy.v2.PersonVOV2;
 import br.com.udemy.vo.PersonVO;
 import lombok.var;
 
@@ -33,6 +34,13 @@ public class PersonService {
 		var vo = DozerConverter.parseObject(personRepository.save(entity), PersonVO.class);
 		return vo;
 	}
+	
+	public PersonVOV2 createV2(PersonVOV2 person) {
+		var entity = DozerConverter.parseObject(person, Person.class); 
+		var vo = DozerConverter.parseObject(personRepository.save(entity), PersonVOV2.class);
+		return vo;
+	}
+
 
 	public PersonVO update(PersonVO person) {
 		var entity = personRepository.findById(person.getId())
