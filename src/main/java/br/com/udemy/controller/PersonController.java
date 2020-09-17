@@ -43,7 +43,7 @@ public class PersonController {
 		return personService.create(person);
 	}
 	
-	@PostMapping("v2")
+	@PostMapping("/v2")
 	@ResponseStatus(HttpStatus.CREATED)
 	public PersonVOV2 createV2(@RequestBody PersonVOV2 person) {
 		return personService.createV2(person);

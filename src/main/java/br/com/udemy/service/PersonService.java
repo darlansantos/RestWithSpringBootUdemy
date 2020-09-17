@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import br.com.udemy.converter.DozerConverter;
+import br.com.udemy.converter.custom.PersonConverter;
 import br.com.udemy.domain.Person;
 import br.com.udemy.exception.ResourceNotFoundException;
 import br.com.udemy.repository.PersonRepository;
@@ -18,6 +19,9 @@ public class PersonService {
 	
 	@Autowired
 	PersonRepository personRepository;
+	
+	@Autowired
+	PersonConverter personConverter;
 
 	public PersonVO findById(Long id) {
 		var entity = personRepository.findById(id)
@@ -36,8 +40,8 @@ public class PersonService {
 	}
 	
 	public PersonVOV2 createV2(PersonVOV2 person) {
-		var entity = DozerConverter.parseObject(person, Person.class); 
-		var vo = DozerConverter.parseObject(personRepository.save(entity), PersonVOV2.class);
+		var entity = personConverter.convertToVOEntity(person);
+		var vo = personConverter.convertEntityToVO(personRepository.save(entity));
 		return vo;
 	}
 
