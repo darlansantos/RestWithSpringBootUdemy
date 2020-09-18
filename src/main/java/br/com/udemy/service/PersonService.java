@@ -24,7 +24,8 @@ public class PersonService {
 	PersonConverter personConverter;
 
 	public PersonVO findById(Long id) {
-		var entity = personRepository.findById(id)
+		var entity = personRepository
+				.findById(id)
 				.orElseThrow(() -> new ResourceNotFoundException("No records found for this ID"));
 		return DozerConverter.parseObject(entity, PersonVO.class);
 	}
@@ -45,22 +46,26 @@ public class PersonService {
 		return vo;
 	}
 
-
-	public PersonVO update(PersonVO person) {
-		var entity = personRepository.findById(person.getId())
-				.orElseThrow(() -> new ResourceNotFoundException("No records found for this ID"));
-		entity.setFirstName(person.getFirstName());
-		entity.setLastName(person.getLastName());
-		entity.setAddress(person.getAddress());
-		entity.setGender(person.getGender());
-		var vo = DozerConverter.parseObject(personRepository.save(entity), PersonVO.class);
-		return vo;
+	public void update(PersonVO person) {
+		personRepository
+		.findById(person.getId())
+		.map(entity -> {
+			entity.setFirstName(person.getFirstName());
+			entity.setLastName(person.getLastName());
+			entity.setAddress(person.getAddress());
+			entity.setGender(person.getGender());
+			return DozerConverter.parseObject(personRepository.save(entity), PersonVO.class);
+		})
+		.orElseThrow(() -> new ResourceNotFoundException("No records found for this ID"));
 	}
 
 	public void delete(Long id) {
-		Person entity = personRepository.findById(id)
-				.orElseThrow(() -> new ResourceNotFoundException("No records found for this ID"));
-		personRepository.delete(entity);
+		personRepository.findById(id)
+		.map(person -> {
+			personRepository.delete(person);
+			return Void.TYPE;
+		})
+		.orElseThrow(() -> new ResourceNotFoundException("No records found for this ID"));
 	}
 	
 }

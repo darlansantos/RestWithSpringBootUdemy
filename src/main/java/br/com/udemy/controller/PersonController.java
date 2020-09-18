@@ -51,8 +51,8 @@ public class PersonController {
 
 	@PutMapping
 	@ResponseStatus(HttpStatus.NO_CONTENT)
-	public PersonVO update(@RequestBody PersonVO person) {
-		return personService.update(person);
+	public void update(@RequestBody PersonVO person) {
+		personService.update(person);
 	}
 
 	@DeleteMapping("/{id}")
