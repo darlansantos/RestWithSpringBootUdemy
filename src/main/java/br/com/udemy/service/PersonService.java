@@ -37,7 +37,7 @@ public class PersonService {
 	
 	public void update(PersonVO person) {
 		personRepository
-		.findById(person.getId())
+		.findById(person.getKey())
 		.map(entity -> {
 			entity.setFirstName(person.getFirstName());
 			entity.setLastName(person.getLastName());
