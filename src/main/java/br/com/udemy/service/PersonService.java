@@ -5,10 +5,10 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import br.com.udemy.repository.PersonRepository;
 import br.com.udemy.converter.DozerConverter;
 import br.com.udemy.domain.Person;
 import br.com.udemy.exception.ResourceNotFoundException;
-import br.com.udemy.repository.PersonRepository;
 import br.com.udemy.vo.PersonVO;
 import lombok.var;
 
