@@ -57,7 +57,7 @@ public class BookController {
 		return bookVO;
 	}
 	
-	@ApiOperation(value = "Update a specific book by your ID")
+	@ApiOperation(value = "Update a specific book")
 	@PutMapping(produces = { "application/json", "application/xml", "application/x-yaml" }, consumes = { "application/json", "application/xml", "application/x-yaml" })
 	@ResponseStatus(HttpStatus.NO_CONTENT)
 	public BookVO update(@RequestBody BookVO book) {

@@ -57,7 +57,7 @@ public class PersonController {
 		return personVO;
 	}
 	
-	@ApiOperation(value = "Update a specific person by your ID")
+	@ApiOperation(value = "Update a specific person")
 	@PutMapping(produces = { "application/json", "application/xml", "application/x-yaml" }, consumes = { "application/json", "application/xml", "application/x-yaml" })
 	@ResponseStatus(HttpStatus.NO_CONTENT)
 	public PersonVO update(@RequestBody PersonVO person) {
