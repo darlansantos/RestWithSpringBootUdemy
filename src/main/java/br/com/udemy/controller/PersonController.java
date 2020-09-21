@@ -30,7 +30,9 @@ public class PersonController {
 	@GetMapping(produces = { "application/json", "application/xml", "application/x-yaml" })
 	@ResponseStatus(HttpStatus.OK)
 	public List<PersonVO> findAll() {
-		return personService.findAll();
+		List<PersonVO> persons = personService.findAll();
+		persons.stream().forEach(p -> p.add(linkTo(methodOn(PersonController.class).findById(p.getKey())).withSelfRel()));
+		return persons;
 	}
 
 	@GetMapping(value = "/{id}", produces = { "application/json", "application/xml", "application/x-yaml" })
@@ -44,13 +46,17 @@ public class PersonController {
 	@PostMapping(produces = { "application/json", "application/xml", "application/x-yaml" }, consumes = { "application/json", "application/xml", "application/x-yaml" })
 	@ResponseStatus(HttpStatus.CREATED)
 	public PersonVO create(@RequestBody PersonVO person) {
-		return personService.create(person);
+		PersonVO personVO = personService.create(person);
+		personVO.add(linkTo(methodOn(PersonController.class).findById(person.getKey())).withSelfRel());
+		return personVO;
 	}
 	
-	@PutMapping
+	@PutMapping(produces = { "application/json", "application/xml", "application/x-yaml" }, consumes = { "application/json", "application/xml", "application/x-yaml" })
 	@ResponseStatus(HttpStatus.NO_CONTENT)
-	public void update(@RequestBody PersonVO person) {
-		personService.update(person);
+	public PersonVO update(@RequestBody PersonVO person) {
+		PersonVO personVO = personService.update(person);
+		personVO.add(linkTo(methodOn(PersonController.class).findById(person.getKey())).withSelfRel());
+		return personVO;
 	}
 
 	@DeleteMapping("/{id}")
