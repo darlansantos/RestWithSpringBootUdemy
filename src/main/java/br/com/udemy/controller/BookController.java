@@ -19,7 +19,10 @@ import org.springframework.web.bind.annotation.RestController;
 
 import br.com.udemy.service.BookService;
 import br.com.udemy.vo.BookVO;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 
+@Api(value = "Book Endpoint", description = "Description for book", tags = {"BookEndpoint"})
 @RestController
 @RequestMapping("/books")
 public class BookController {
@@ -27,6 +30,7 @@ public class BookController {
 	@Autowired
 	private BookService bookService;
 
+	@ApiOperation(value = "Find all books recorded")
 	@GetMapping(produces = { "application/json", "application/xml", "application/x-yaml" })
 	@ResponseStatus(HttpStatus.OK)
 	public List<BookVO> findAll() {
@@ -35,6 +39,7 @@ public class BookController {
 		return books;
 	}
 
+	@ApiOperation(value = "Find a specific book by your ID")
 	@GetMapping(value = "/{id}", produces = { "application/json", "application/xml", "application/x-yaml" })
 	@ResponseStatus(HttpStatus.OK)
 	public BookVO findById(@PathVariable("id") Long id) {
@@ -43,6 +48,7 @@ public class BookController {
 		return bookVO;
 	}
 
+	@ApiOperation(value = "Create a new book")
 	@PostMapping(produces = { "application/json", "application/xml", "application/x-yaml" }, consumes = { "application/json", "application/xml", "application/x-yaml" })
 	@ResponseStatus(HttpStatus.CREATED)
 	public BookVO create(@RequestBody BookVO book) {
@@ -51,6 +57,7 @@ public class BookController {
 		return bookVO;
 	}
 	
+	@ApiOperation(value = "Update a specific book by your ID")
 	@PutMapping(produces = { "application/json", "application/xml", "application/x-yaml" }, consumes = { "application/json", "application/xml", "application/x-yaml" })
 	@ResponseStatus(HttpStatus.NO_CONTENT)
 	public BookVO update(@RequestBody BookVO book) {
@@ -59,6 +66,7 @@ public class BookController {
 		return bookVO;
 	}
 
+	@ApiOperation(value = "Delete a specific book by your ID")
 	@DeleteMapping("/{id}")
 	@ResponseStatus(HttpStatus.NO_CONTENT)
 	public void delete(@PathVariable("id") Long id) {

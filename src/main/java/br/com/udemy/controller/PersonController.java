@@ -19,14 +19,18 @@ import org.springframework.web.bind.annotation.RestController;
 
 import br.com.udemy.service.PersonService;
 import br.com.udemy.vo.PersonVO;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 
+@Api(value = "Person Endpoint", description = "Description for person", tags = {"PersonEndpoint"})
 @RestController
 @RequestMapping("/person")
 public class PersonController {
 
 	@Autowired
 	private PersonService personService;
-
+	
+	@ApiOperation(value = "Find all people recorded")
 	@GetMapping(produces = { "application/json", "application/xml", "application/x-yaml" })
 	@ResponseStatus(HttpStatus.OK)
 	public List<PersonVO> findAll() {
@@ -35,6 +39,7 @@ public class PersonController {
 		return persons;
 	}
 
+	@ApiOperation(value = "Find a specific person by your ID")
 	@GetMapping(value = "/{id}", produces = { "application/json", "application/xml", "application/x-yaml" })
 	@ResponseStatus(HttpStatus.OK)
 	public PersonVO findById(@PathVariable("id") Long id) {
@@ -43,6 +48,7 @@ public class PersonController {
 		return personVO;
 	}
 
+	@ApiOperation(value = "Create a new person")
 	@PostMapping(produces = { "application/json", "application/xml", "application/x-yaml" }, consumes = { "application/json", "application/xml", "application/x-yaml" })
 	@ResponseStatus(HttpStatus.CREATED)
 	public PersonVO create(@RequestBody PersonVO person) {
@@ -51,6 +57,7 @@ public class PersonController {
 		return personVO;
 	}
 	
+	@ApiOperation(value = "Update a specific person by your ID")
 	@PutMapping(produces = { "application/json", "application/xml", "application/x-yaml" }, consumes = { "application/json", "application/xml", "application/x-yaml" })
 	@ResponseStatus(HttpStatus.NO_CONTENT)
 	public PersonVO update(@RequestBody PersonVO person) {
@@ -59,6 +66,7 @@ public class PersonController {
 		return personVO;
 	}
 
+	@ApiOperation(value = "Delete a specific person by your ID")
 	@DeleteMapping("/{id}")
 	@ResponseStatus(HttpStatus.NO_CONTENT)
 	public void delete(@PathVariable("id") Long id) {
