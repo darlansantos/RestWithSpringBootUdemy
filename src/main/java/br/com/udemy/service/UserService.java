@@ -7,6 +7,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import br.com.udemy.repository.UserRepository;
+import lombok.var;
 
 @Service
 public class UserService implements UserDetailsService {
