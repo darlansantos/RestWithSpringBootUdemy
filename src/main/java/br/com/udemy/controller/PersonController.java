@@ -7,6 +7,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -22,6 +23,7 @@ import br.com.udemy.vo.PersonVO;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 
+//@CrossOrigin
 @Api(value = "Person Endpoint", description = "Description for person", tags = {"PersonEndpoint"})
 @RestController
 @RequestMapping("/person")
@@ -38,7 +40,7 @@ public class PersonController {
 		persons.stream().forEach(p -> p.add(linkTo(methodOn(PersonController.class).findById(p.getKey())).withSelfRel()));
 		return persons;
 	}
-
+	@CrossOrigin(origins = "http://localhost:8080")
 	@ApiOperation(value = "Find a specific person by your ID")
 	@GetMapping(value = "/{id}", produces = { "application/json", "application/xml", "application/x-yaml" })
 	@ResponseStatus(HttpStatus.OK)
@@ -48,6 +50,7 @@ public class PersonController {
 		return personVO;
 	}
 
+	@CrossOrigin(origins = {"http://localhost:8080", "https://www.google.com"})
 	@ApiOperation(value = "Create a new person")
 	@PostMapping(produces = { "application/json", "application/xml", "application/x-yaml" }, consumes = { "application/json", "application/xml", "application/x-yaml" })
 	@ResponseStatus(HttpStatus.CREATED)
