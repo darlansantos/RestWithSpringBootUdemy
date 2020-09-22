@@ -22,7 +22,7 @@ import br.com.udemy.vo.BookVO;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 
-@Api(value = "Book Endpoint", description = "Description for book", tags = {"BookEndpoint"})
+@Api(value = "Book Endpoint", description = "Description for book", tags = { "BookEndpoint" })
 @RestController
 @RequestMapping("/books")
 public class BookController {
@@ -49,16 +49,18 @@ public class BookController {
 	}
 
 	@ApiOperation(value = "Create a new book")
-	@PostMapping(produces = { "application/json", "application/xml", "application/x-yaml" }, consumes = { "application/json", "application/xml", "application/x-yaml" })
+	@PostMapping(produces = { "application/json", "application/xml", "application/x-yaml" }, consumes = {
+			"application/json", "application/xml", "application/x-yaml" })
 	@ResponseStatus(HttpStatus.CREATED)
 	public BookVO create(@RequestBody BookVO book) {
 		BookVO bookVO = bookService.create(book);
 		bookVO.add(linkTo(methodOn(BookController.class).findById(book.getKey())).withSelfRel());
 		return bookVO;
 	}
-	
+
 	@ApiOperation(value = "Update a specific book")
-	@PutMapping(produces = { "application/json", "application/xml", "application/x-yaml" }, consumes = { "application/json", "application/xml", "application/x-yaml" })
+	@PutMapping(produces = { "application/json", "application/xml", "application/x-yaml" }, consumes = {
+			"application/json", "application/xml", "application/x-yaml" })
 	@ResponseStatus(HttpStatus.NO_CONTENT)
 	public BookVO update(@RequestBody BookVO book) {
 		BookVO bookVO = bookService.update(book);

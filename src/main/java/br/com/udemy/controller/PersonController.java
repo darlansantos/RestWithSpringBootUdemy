@@ -22,24 +22,24 @@ import br.com.udemy.vo.PersonVO;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 
-
-@Api(value = "Person Endpoint", description = "Description for person", tags = {"PersonEndpoint"})
+@Api(value = "Person Endpoint", description = "Description for person", tags = { "PersonEndpoint" })
 @RestController
 @RequestMapping("/person")
 public class PersonController {
 
 	@Autowired
 	private PersonService personService;
-	
+
 	@ApiOperation(value = "Find all people recorded")
 	@GetMapping(produces = { "application/json", "application/xml", "application/x-yaml" })
 	@ResponseStatus(HttpStatus.OK)
 	public List<PersonVO> findAll() {
 		List<PersonVO> persons = personService.findAll();
-		persons.stream().forEach(p -> p.add(linkTo(methodOn(PersonController.class).findById(p.getKey())).withSelfRel()));
+		persons.stream()
+				.forEach(p -> p.add(linkTo(methodOn(PersonController.class).findById(p.getKey())).withSelfRel()));
 		return persons;
 	}
-	
+
 	@ApiOperation(value = "Find a specific person by your ID")
 	@GetMapping(value = "/{id}", produces = { "application/json", "application/xml", "application/x-yaml" })
 	@ResponseStatus(HttpStatus.OK)
@@ -50,16 +50,18 @@ public class PersonController {
 	}
 
 	@ApiOperation(value = "Create a new person")
-	@PostMapping(produces = { "application/json", "application/xml", "application/x-yaml" }, consumes = { "application/json", "application/xml", "application/x-yaml" })
+	@PostMapping(produces = { "application/json", "application/xml", "application/x-yaml" }, consumes = {
+			"application/json", "application/xml", "application/x-yaml" })
 	@ResponseStatus(HttpStatus.CREATED)
 	public PersonVO create(@RequestBody PersonVO person) {
 		PersonVO personVO = personService.create(person);
 		personVO.add(linkTo(methodOn(PersonController.class).findById(person.getKey())).withSelfRel());
 		return personVO;
 	}
-	
+
 	@ApiOperation(value = "Update a specific person")
-	@PutMapping(produces = { "application/json", "application/xml", "application/x-yaml" }, consumes = { "application/json", "application/xml", "application/x-yaml" })
+	@PutMapping(produces = { "application/json", "application/xml", "application/x-yaml" }, consumes = {
+			"application/json", "application/xml", "application/x-yaml" })
 	@ResponseStatus(HttpStatus.NO_CONTENT)
 	public PersonVO update(@RequestBody PersonVO person) {
 		PersonVO personVO = personService.update(person);
