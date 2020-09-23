@@ -6,17 +6,19 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import br.com.udemy.exception.InvalidJwtAuthenticationException;
 import br.com.udemy.repository.UserRepository;
 import br.com.udemy.security.AccountCredentialsVO;
 import br.com.udemy.security.jwt.JwtTokenProvider;
@@ -38,6 +40,7 @@ public class AuthController {
 	@ApiOperation(value = "Authenticate a user by credentials")
 	@PostMapping(value = "/signin", produces = { "application/json", "application/xml", "application/x-yaml" }, 
 		consumes = { "application/json", "application/xml", "application/x-yaml" })
+	@ResponseStatus(HttpStatus.CREATED)
 	public ResponseEntity signin(@RequestBody AccountCredentialsVO data) {
 		try {
 			var username = data.getUsername();
@@ -52,7 +55,7 @@ public class AuthController {
 			if (user != null) {
 				token = jwtTokenProvider.createToken(username, user.getRoles());
 			} else {
-				throw new UsernameNotFoundException("Username " + username + "not found!");
+				throw new UsernameNotFoundException("Username " + username + " not found!");
 			}
 			
 			Map<Object, Object> model = new HashMap<>();
@@ -60,7 +63,7 @@ public class AuthController {
 			model.put("token", token);
 			return ok(model);
 			
-		} catch (InvalidJwtAuthenticationException e) {
+		} catch (AuthenticationException  e) {
 			throw new BadCredentialsException("Invalid username/password supplied!");
 		}
 	}
